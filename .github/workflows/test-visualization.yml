@@ -1,0 +1,18 @@
+name: Test Workflow Visualization
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-job:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Step 1 - Hello
+      run: echo "Hello from GitHub Actions!"
+    
+    - name: Step 2 - Current Time
+      run: echo "Time is $(date)"
+    
+    - name: Step 3 - Success
+      run: echo "✅ Workflow visualization test complete!"
