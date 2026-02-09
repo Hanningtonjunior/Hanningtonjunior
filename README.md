@@ -32,8 +32,9 @@ Multiple interconnected workflows demonstrating:
 - Permission management
 - Merge conflict resolution
 
-### 📈 GitHub Stats
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Hanningtonjunior&show_icons=true&theme=dark&hide_title=true)
+### 📊 GitHub Stats
+
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Hanningtonjunior&show_icons=true&theme=dark)
 
 ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Hanningtonjunior&layout=compact&theme=dark)
 
