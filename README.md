@@ -18,7 +18,7 @@ A complete job search automation suite with:
 - Automated tracking of applications
 - Weekly goal reminders
 - Progress reporting via GitHub Actions
-- [View Workflows](.github/workflows/)
+- [View Workflows](https://github.com/Hanningtonjunior/Hanningtonjunior/tree/main/.github/workflows)
 
 #### 2. **Profile Automation**
 Self-updating GitHub profile with:
