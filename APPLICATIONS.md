@@ -2,15 +2,19 @@
 
 ## Week of 2025-02-09
 
-**Goal**: 5 applications/week
-**Sent this week**: 0
+**Goal**: 5 applications/week  
+**Progress**: 0/5 applications sent
 
-### Companies to Apply:
-- [ ] Company 1
-- [ ] Company 2
-- [ ] Company 3
-- [ ] Company 4
-- [ ] Company 5
+### Target Companies:
+- [ ] Update LinkedIn profile
+- [ ] Research remote-first companies
+- [ ] Tailor resume for automation roles
+- [ ] Apply to 5 positions
+- [ ] Follow up on applications
+
+### Automation Status:
+✅ GitHub Profile automated  
+✅ Job tracker created  
+⏳ Building portfolio projects
 
 *Last updated: $(date)*
-*Automatically updated by GitHub Actions*
