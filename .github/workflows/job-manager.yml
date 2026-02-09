@@ -1,0 +1,48 @@
+name: Job Application Manager
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * 1'  # Monday 9 AM
+
+jobs:
+  manage-applications:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Update application tracker
+      run: |
+        DATE=$(date +'%Y-%m-%d')
+        
+        # Update or create APPLICATIONS.md
+        if [ ! -f APPLICATIONS.md ]; then
+          echo "# Job Applications Tracker" > APPLICATIONS.md
+          echo "" >> APPLICATIONS.md
+        fi
+        
+        echo "## Week of $DATE" >> APPLICATIONS.md
+        echo "" >> APPLICATIONS.md
+        echo "### Target: Apply to 5 remote positions" >> APPLICATIONS.md
+        echo "- [ ] Company 1" >> APPLICATIONS.md
+        echo "- [ ] Company 2" >> APPLICATIONS.md
+        echo "- [ ] Company 3" >> APPLICATIONS.md
+        echo "- [ ] Company 4" >> APPLICATIONS.md
+        echo "- [ ] Company 5" >> APPLICATIONS.md
+        echo "" >> APPLICATIONS.md
+        echo "*Last updated: $(date)*" >> APPLICATIONS.md
+        
+        # Update JSON data
+        echo '{"last_updated":"'$(date)'","weekly_goal":5,"completed":0}' > job-data.json
+    
+    - name: Commit and push updates
+      run: |
+        git config --local user.name "Job Manager Bot"
+        git config --local user.email "actions@github.com"
+        git add APPLICATIONS.md job-data.json
+        git diff --staged --quiet || git commit -m "📋 Update job tracker: $(date +'%Y-%m-%d')"
+        git push
