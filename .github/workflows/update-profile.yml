@@ -2,7 +2,7 @@ name: Update Profile README
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs at 00:00 UTC daily
+    - cron: '0 0 * * *'
   workflow_dispatch:
   push:
     branches: [ main ]
@@ -20,11 +20,10 @@ jobs:
     - name: Generate updated README
       id: generate
       run: |
-        # Get current date
         LAST_UPDATED=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
         
-        # Create updated README
-        cat > README.md << 'PROFILEREADME'
+        # Create a temporary file with the README content
+        cat > temp_readme.md << 'PROFILEEOF'
 # 👋 Hello, I'm Hannington!
 
 ## 🚀 Aspiring Remote Developer & Automation Enthusiast
@@ -67,7 +66,11 @@ I'm on a journey to become a full-time remote developer by mastering GitHub, aut
 
 ⏰ **Last Updated**: $LAST_UPDATED  
 🤖 **This README updates automatically via GitHub Actions!**
-PROFILEREADME
+PROFILEEOF
+        
+        # Replace the variable
+        sed "s/\\\$LAST_UPDATED/$LAST_UPDATED/g" temp_readme.md > README.md
+        rm temp_readme.md
         
         echo "LAST_UPDATED=$LAST_UPDATED" >> $GITHUB_OUTPUT
     
