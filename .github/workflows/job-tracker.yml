@@ -1,0 +1,7 @@
+name: Track Job Applications
+on:
+  workflow_dispatch:
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    steps:
