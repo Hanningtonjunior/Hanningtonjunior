@@ -5,3 +5,5 @@ jobs:
   track:
     runs-on: ubuntu-latest
     steps:
+      - name: Job tracking
+        run: echo "Job tracking coming soon!"
