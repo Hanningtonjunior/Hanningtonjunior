@@ -1,0 +1,51 @@
+name: Update Skills Dashboard
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0'  # Every Sunday at midnight
+
+jobs:
+  update-skills:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Update skills file
+      run: |
+        cat > SKILLS.md << 'EOF'
+# 🚀 Skills Dashboard
+        
+## 📊 Current Skill Levels
+- **GitHub Actions**: ⭐⭐⭐⭐☆ (Advanced)
+- **Python Scripting**: ⭐⭐⭐☆☆ (Intermediate)
+- **Git/GitHub**: ⭐⭐⭐⭐☆ (Advanced)
+- **Automation**: ⭐⭐⭐⭐☆ (Advanced)
+- **YAML/JSON**: ⭐⭐⭐☆☆ (Intermediate)
+        
+## 🎯 Learning Focus
+1. Advanced GitHub Actions workflows
+2. API integrations
+3. Database management
+4. Cloud deployment
+        
+## 📈 Progress This Month
+- Created 4 automated workflows
+- Built job tracking system
+- Mastered Git conflict resolution
+- Started remote job applications
+        
+---
+*Updated: $(date)* | *Auto-generated via GitHub Actions*
+EOF
+    
+    - name: Commit
+      run: |
+        git config user.name "Skills Tracker"
+        git config user.email "skills@example.com"
+        git add SKILLS.md
+        git commit -m "📈 Update skills dashboard" || exit 0
+        git push
