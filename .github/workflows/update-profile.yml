@@ -1,83 +1,28 @@
 name: Update Profile README
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
   workflow_dispatch:
-  push:
-    branches: [ main ]
 
 jobs:
-  update-readme:
+  update:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
     
-    - name: Generate updated README
-      id: generate
+    - name: Update README
       run: |
-        LAST_UPDATED=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-        
-        # Create a temporary file with the README content
-        cat > temp_readme.md << 'PROFILEEOF'
-# 👋 Hello, I'm Hannington!
-
-## 🚀 Aspiring Remote Developer & Automation Enthusiast
-
-I'm on a journey to become a full-time remote developer by mastering GitHub, automation, and modern development workflows.
-
-### 📊 GitHub Stats
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Hanningtonjunior&show_icons=true&theme=dark&hide_title=true)
-
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Hanningtonjunior&layout=compact&theme=dark)
-
-### 🔧 Current Skills & Tools
-- **Version Control**: Git, GitHub
-- **Automation**: GitHub Actions, Workflows
-- **Languages**: Learning Python, Markdown, Bash
-- **Tools**: VS Code, Git Bash, GitHub CLI
-- **Cloud**: GitHub Actions CI/CD
-
-### 🎯 2025 Goals
-1. ✅ Complete GitHub setup & authentication
-2. ✅ Build first automated workflow  
-3. 🔄 Create 5+ automation projects
-4. 🔲 Land first remote development role
-5. 🔲 Contribute to open source
-
-### 🏗️ Active Projects
-- [my-first-project](https://github.com/Hanningtonjunior/my-first-project) - Learning Git & GitHub Actions
-- **Profile Automation** - This auto-updating README!
-- *More projects coming soon...*
-
-### 📈 Learning Journey
-- **Last Automation Run**: $LAST_UPDATED
-- **Days Learning GitHub**: Active since February 2025
-
-### 📫 Connect With Me
-- GitHub: [@Hanningtonjunior](https://github.com/Hanningtonjunior)
-- *Learning in public and sharing my journey!*
-
----
-
-⏰ **Last Updated**: $LAST_UPDATED  
-🤖 **This README updates automatically via GitHub Actions!**
-PROFILEEOF
-        
-        # Replace the variable
-        sed "s/\\\$LAST_UPDATED/$LAST_UPDATED/g" temp_readme.md > README.md
-        rm temp_readme.md
-        
-        echo "LAST_UPDATED=$LAST_UPDATED" >> $GITHUB_OUTPUT
+        DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+        echo "# Profile Updated at $DATE" > README.md
+        echo "" >> README.md
+        echo "This updates automatically via GitHub Actions!" >> README.md
     
-    - name: Commit and push changes
+    - name: Commit
       run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
         git add README.md
-        git diff --staged --quiet || git commit -m "🤖 Auto-update profile: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+        git commit -m "Update: $(date -u +'%Y-%m-%d %H:%M:%S')" || exit 0
         git push
