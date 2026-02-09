@@ -51,7 +51,6 @@ Multiple interconnected workflows demonstrating:
 
 ### 📫 Connect With Me
 - **GitHub**: [@Hanningtonjunior](https://github.com/Hanningtonjunior)
-- **LinkedIn**: [Your LinkedIn Profile URL]
 - **Portfolio**: This repository!
 
 ### 📈 Daily Automation Log
