@@ -2,6 +2,8 @@ name: Job Application Manager
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9 AM
 
 jobs:
   update-tracker:
@@ -12,24 +14,69 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
     
-    - name: Create or update tracker
+    - name: Update job tracker file
       run: |
-        echo "# Job Applications Tracker" > APPLICATIONS.md
-        echo "" >> APPLICATIONS.md
-        echo "## Last Updated" >> APPLICATIONS.md
-        echo "$(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> APPLICATIONS.md
-        echo "" >> APPLICATIONS.md
-        echo "### Weekly Goals" >> APPLICATIONS.md
-        echo "- [ ] Research 5 companies" >> APPLICATIONS.md
-        echo "- [ ] Update resume" >> APPLICATIONS.md
-        echo "- [ ] Send 3 applications" >> APPLICATIONS.md
-        echo "- [ ] Follow up on submissions" >> APPLICATIONS.md
+        # Get current date
+        DATE=$(date -u +"%Y-%m-%d")
+        TIME=$(date -u +"%H:%M:%S")
+        
+        # Create or update APPLICATIONS.md
+        cat > APPLICATIONS.md << 'FILE_CONTENT'
+# 📋 Job Applications Tracker
+
+## Week of $DATE
+
+### 🎯 Weekly Goals
+- [ ] Research 5 remote-friendly companies
+- [ ] Update LinkedIn profile
+- [ ] Tailor resume for automation roles
+- [ ] Apply to 3 positions
+- [ ] Follow up on previous applications
+
+### 📊 Progress
+- **Applications this week**: 0
+- **Total applications**: 0
+- **Interviews scheduled**: 0
+
+### 💼 Target Companies
+1. Remote-first tech companies
+2. Automation/Scripting roles
+3. Junior Developer positions
+
+### 📝 Notes
+- Focus on GitHub Automation skills
+- Highlight projects from this repository
+- Emphasize quick learning ability
+
+---
+⏰ **Last Updated**: $DATE at $TIME UTC  
+🤖 **Automatically updated by GitHub Actions**
+FILE_CONTENT
+        
+        echo "✅ Created APPLICATIONS.md"
+    
+    - name: Create data file
+      run: |
+        # Create simple JSON data
+        cat > job-data.json << 'JSON_CONTENT'
+{
+  "last_updated": "$(date -u +'%Y-%m-%d %H:%M:%S')",
+  "weekly_goal": 5,
+  "applications_sent": 0,
+  "interviews": 0,
+  "notes": "Tracking remote job applications"
+}
+JSON_CONTENT
+        
+        echo "✅ Created job-data.json"
     
     - name: Commit and push changes
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add APPLICATIONS.md
-        git commit -m "🤖 Update job tracker: $(date -u +'%Y-%m-%d')" || exit 0
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add APPLICATIONS.md job-data.json
+        git commit -m "📅 Update job tracker: $(date -u +'%Y-%m-%d')" || exit 0
         git push
